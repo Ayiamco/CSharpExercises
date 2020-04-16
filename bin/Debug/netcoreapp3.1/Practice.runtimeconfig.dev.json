@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\HP Spectre XT Pro\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\HP Spectre XT Pro\\.nuget\\packages"
+    ]
+  }
+}
