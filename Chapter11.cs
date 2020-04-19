@@ -110,5 +110,216 @@ namespace Practice
             return count;
         }
         
+        
+        class ShunttingYard
+        {
+            Queue output_queue = new Queue();
+            Stack operator_stack = new Stack();
+
+
+            Dictionary<string, int> operator_precedence = new Dictionary<string, int>();
+
+            public ShunttingYard()
+            {
+                operator_precedence.Add("^", 5);
+                operator_precedence.Add("/", 4);
+                operator_precedence.Add("*", 3);
+                operator_precedence.Add("+", 2);
+                operator_precedence.Add("-", 1);
+                operator_precedence.Add("(", 6);
+
+            }
+
+            public string PostFix(string infix)
+            {
+                Exception e = new Exception(" Mathematical Expression Contains invalid Characters ");
+                List<object> infix_list = new List<object>();
+                bool is_same_digit = true;
+                string digit = "";
+                int index_count = 0;
+                foreach (char item in infix)
+                {
+                    index_count++;
+                    if ("1234567890".Contains(item))
+                    {
+                        digit = digit + Convert.ToString(item);
+                        if (index_count == infix.ToCharArray().Length)
+                        {
+                            infix_list.Add(digit);
+                        }
+                    }
+                    else if ("*^()/-+".Contains(item))
+                    {
+                        if (digit != "")
+                            infix_list.Add(digit);
+                        infix_list.Add(item);
+                        digit = "";
+                    }
+                    else
+                    { throw e; }
+                }
+
+                foreach (object value in infix_list)
+                {
+                    if ("^()*/-+".Contains(Convert.ToString(value)))
+                    {
+                        if (operator_stack.IsEmpty())
+                        {
+                            operator_stack.Push(value);
+                        }
+                        else
+                        {
+
+                            if ("(".Contains(Convert.ToString(value)))
+                            {
+                                operator_stack.Push(value);
+                            }
+                            else if (")".Contains(Convert.ToString(value)))
+                            {
+
+                                while (Convert.ToString(operator_stack.Peek()) != "(")
+                                {
+                                    output_queue.Enqueue(operator_stack.Pop());
+                                }
+                                operator_stack.Pop();
+                            }
+                            else
+                            {
+                                if (operator_precedence[Convert.ToString(operator_stack.Peek())] >
+                                operator_precedence[Convert.ToString(value)])
+                                //new item has greater precedence that item at top of stack
+                                {
+                                    while (operator_precedence[Convert.ToString(operator_stack.Peek())] >
+                                            operator_precedence[Convert.ToString(value)])
+                                    {
+                                        if (Convert.ToString(operator_stack.Peek()) == "(")
+                                        {
+                                            operator_stack.Push(value);
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            output_queue.Enqueue(operator_stack.Pop());
+                                            operator_stack.Push(value);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    operator_stack.Push(value);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        output_queue.Enqueue(value);
+                    }
+                }
+
+                while (operator_stack.Size() != 0)
+                {
+                    output_queue.Enqueue(operator_stack.Pop());
+                }
+                string postfix = "";
+                while (output_queue.Size() != 0)
+                {
+                    postfix = postfix + Convert.ToString(output_queue.Dequeue()) + " ";
+                }
+                return postfix;
+
+            }
+
+            private static string GetEval(string postfix_string)
+            {
+                Console.WriteLine("GetEval Postfix: " + postfix_string);
+                string output_string = "";
+                string[] postfix_ = postfix_string.Split(" ");
+                List<string> postfix_array = new List<string>(postfix_);
+                string my_operator = "";
+                long item_1 = 0;
+                long item_2 = 0;
+                long ans = 0;
+                int operator_index = new int();
+
+                for (int counter = postfix_array.Count - 1; counter == 2; counter--)
+                {
+                    if ("/*^+-".Contains(postfix_array[counter]))
+
+                    {
+                        try
+                        {
+
+                            item_1 = Convert.ToInt64(postfix_array[counter - 1]);
+                            item_2 = Convert.ToInt64(postfix_array[counter - 2]);
+                            my_operator = Convert.ToString(postfix_array[counter]);
+                            operator_index = Convert.ToInt32(counter - 2);
+                            break;
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Condition Not MET:");
+
+                        }
+
+                    }
+
+                }
+
+                Console.WriteLine("PostFix Array after remove: " + String.Join(" ", postfix_array));
+                if (my_operator == "*")
+                { ans = item_1 * item_2; }
+
+                else if (my_operator == "/")
+                { ans = item_1 * item_2; }
+
+                else if (my_operator == "-")
+                { ans = item_1 - item_2; }
+
+                else if (my_operator == "+")
+                { ans = item_1 + item_2; }
+
+                else if (my_operator == "^")
+                { ans = item_1 ^ item_2; }
+
+                Console.WriteLine("MY ans= " + Convert.ToString(ans));
+                Console.WriteLine("PostFix Array before removal: " + String.Join(" ", postfix_array));
+                postfix_array[operator_index] = Convert.ToString(ans);
+                Console.WriteLine("PostFix Array before removal1: " + String.Join(" ", postfix_array));
+                postfix_array.RemoveAt(operator_index + 1);
+                Console.WriteLine("PostFix Array before remova2: " + String.Join(" ", postfix_array));
+                postfix_array.RemoveAt(operator_index + 1);
+
+                output_string = String.Join(" ", postfix_array);
+                Console.WriteLine("GetEval output_string= " + Convert.ToString(output_string));
+                return output_string;
+
+            }
+
+
+            public long Calculate(string postfix)
+            {
+                long ans = 0;
+                postfix = PostFix(postfix);
+                Console.WriteLine("PostFix Output: " + postfix);
+                while (postfix.Split(" ").Length > 1)
+                {
+                    try
+                    {
+                        ans = Convert.ToInt64(postfix);
+                        break;
+                    }
+                    catch
+                    {
+                        postfix = GetEval(postfix);
+                    }
+
+                }
+                ans = Convert.ToInt64(postfix);
+                return ans;
+            }
+        }
     }
+
+}
 }
