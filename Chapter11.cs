@@ -134,26 +134,77 @@ namespace Practice
             {
                 Exception e = new Exception(" Mathematical Expression Contains invalid Characters ");
                 List<object> infix_list = new List<object>();
-                bool is_same_digit = true;
                 string digit = "";
-                int index_count = 0;
+                int next_item_index_count = 0;
+                bool is_not_negative = true;
                 foreach (char item in infix)
                 {
-                    index_count++;
+                    next_item_index_count++;
+                    Console.WriteLine(Convert.ToString(item) + ": " + Convert.ToString(next_item_index_count) + "  True index: " + Convert.ToString(next_item_index_count - 1));
                     if ("1234567890".Contains(item))
                     {
                         digit = digit + Convert.ToString(item);
-                        if (index_count == infix.ToCharArray().Length)
+                        if (next_item_index_count == infix.ToCharArray().Length)
                         {
-                            infix_list.Add(digit);
+                            if (is_not_negative)
+                                infix_list.Add(digit);
+                            else if (is_not_negative == false)
+                                infix_list.Add("-" + digit);
                         }
                     }
                     else if ("*^()/-+".Contains(item))
                     {
-                        if (digit != "")
-                            infix_list.Add(digit);
-                        infix_list.Add(item);
-                        digit = "";
+                        if (item == '-' && "0123456789".Contains(infix[next_item_index_count]) == true)
+                        //check if it a subtraction or a negation(negative sign before a number)
+                        {
+                            if (next_item_index_count == 1)
+                            {
+                                Console.WriteLine("here4");
+                                Console.WriteLine("Negative at beginning");
+                                is_not_negative = false;
+                            }
+                            else if ("0123456789".Contains(infix[next_item_index_count - 2]) == false)
+                            {
+                                Console.WriteLine("negative in middle.");
+                                is_not_negative = false;
+
+                            }
+                            else
+                            {
+                                if (digit != "" && is_not_negative)
+                                {
+                                    Console.WriteLine("here3");
+                                    infix_list.Add(digit);
+                                    // Console.WriteLine("positive number: " + "-" + digit +" with index:  "+ Convert.ToString(next_item_index_count-1));
+                                }
+
+                                else if (digit != "" && is_not_negative == false)
+                                {
+                                    //Console.WriteLine("negative number: " + "-" + digit + " with index:  " + Convert.ToString(next_item_index_count - 1));
+                                    Console.WriteLine("here2");
+                                    infix_list.Add("-" + digit);
+                                    is_not_negative = true;
+
+                                }
+                                infix_list.Add(item);
+                                digit = "";
+                            }
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("here1");
+                            if (digit != "" && is_not_negative)
+                                infix_list.Add(digit);
+                            else if (digit != "" && is_not_negative == false)
+                            {
+                                infix_list.Add("-" + digit);
+                                is_not_negative = true;
+                            }
+                            infix_list.Add(item);
+                            digit = "";
+                        }
+
                     }
                     else
                     { throw e; }
@@ -224,7 +275,10 @@ namespace Practice
                 string postfix = "";
                 while (output_queue.Size() != 0)
                 {
-                    postfix = postfix + Convert.ToString(output_queue.Dequeue()) + " ";
+                    if (output_queue.Size() != 1)
+                        postfix = postfix + Convert.ToString(output_queue.Dequeue()) + " ";
+                    else
+                        postfix = postfix + Convert.ToString(output_queue.Dequeue());
                 }
                 return postfix;
 
@@ -240,20 +294,26 @@ namespace Practice
                 long item_1 = 0;
                 long item_2 = 0;
                 long ans = 0;
-                int operator_index = new int();
+                int item_2_index = new int();
+                int end = postfix_array.Count;
 
-                for (int counter = postfix_array.Count - 1; counter == 2; counter--)
+                for (int counter = 0; counter < end - 1; counter++)
                 {
-                    if ("/*^+-".Contains(postfix_array[counter]))
+
+                    Console.WriteLine("condition : " + "/*^+-".Contains(postfix_array[end - counter - 1]));
+
+                    if ("/*^+-".Contains(postfix_array[end - counter - 1]))
 
                     {
                         try
                         {
 
-                            item_1 = Convert.ToInt64(postfix_array[counter - 1]);
-                            item_2 = Convert.ToInt64(postfix_array[counter - 2]);
-                            my_operator = Convert.ToString(postfix_array[counter]);
-                            operator_index = Convert.ToInt32(counter - 2);
+                            item_1 = Convert.ToInt64(postfix_array[end - counter - 2]);
+
+                            item_2 = Convert.ToInt64(postfix_array[end - counter - 3]);
+
+                            my_operator = Convert.ToString(postfix_array[end - counter - 1]);
+                            item_2_index = Convert.ToInt32(end - counter - 3);
                             break;
                         }
                         catch
@@ -266,29 +326,32 @@ namespace Practice
 
                 }
 
-                Console.WriteLine("PostFix Array after remove: " + String.Join(" ", postfix_array));
+                Console.WriteLine("PostFix operator: " + my_operator);
+                Console.WriteLine("item 1: " + Convert.ToString(item_1));
+                Console.WriteLine("item 2: " + Convert.ToString(item_2));
                 if (my_operator == "*")
-                { ans = item_1 * item_2; }
+                { ans = item_2 * item_1; }
 
                 else if (my_operator == "/")
-                { ans = item_1 * item_2; }
+                { ans = item_2 * item_1; }
 
                 else if (my_operator == "-")
-                { ans = item_1 - item_2; }
+                { ans = item_2 - item_1; }
 
                 else if (my_operator == "+")
-                { ans = item_1 + item_2; }
+                { ans = item_2 + item_1; }
 
                 else if (my_operator == "^")
-                { ans = item_1 ^ item_2; }
+                { ans = Convert.ToInt64(Math.Pow(Convert.ToDouble(item_2), Convert.ToDouble(item_1))); }
 
                 Console.WriteLine("MY ans= " + Convert.ToString(ans));
-                Console.WriteLine("PostFix Array before removal: " + String.Join(" ", postfix_array));
-                postfix_array[operator_index] = Convert.ToString(ans);
-                Console.WriteLine("PostFix Array before removal1: " + String.Join(" ", postfix_array));
-                postfix_array.RemoveAt(operator_index + 1);
-                Console.WriteLine("PostFix Array before remova2: " + String.Join(" ", postfix_array));
-                postfix_array.RemoveAt(operator_index + 1);
+
+                postfix_array[item_2_index] = Convert.ToString(ans);
+                Console.WriteLine("PostFix Array after replacing index: " + String.Join(" ", postfix_array));
+                postfix_array.RemoveAt(item_2_index + 1);
+                Console.WriteLine("PostFix Array after removing item1: " + String.Join(" ", postfix_array));
+                postfix_array.RemoveAt(item_2_index + 1);
+                Console.WriteLine("PostFix Array after removing operator: " + String.Join(" ", postfix_array));
 
                 output_string = String.Join(" ", postfix_array);
                 Console.WriteLine("GetEval output_string= " + Convert.ToString(output_string));
@@ -321,5 +384,6 @@ namespace Practice
         }
     }
 
+
 }
-}
+
