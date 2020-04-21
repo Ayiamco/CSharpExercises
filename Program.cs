@@ -39,7 +39,11 @@ namespace Practice
 
             //Chapter12.GetSqrt("boy");
             //Console.WriteLine(Convert.ToString(null));
-            Chapter12.ReadNumber(1, 100);
+            //Chapter12.ReadNumber(1, 100);
+            
+
+            
+            Console.WriteLine(Chapter13.UpperCase("bi <upcase>is a boy, obi</upcase>  obi secondary schhol"));
 
         }
 
