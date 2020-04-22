@@ -64,24 +64,82 @@ namespace Practice
             }
             return count;
         }
-
-        public static string UpperCase(string input_string)
+//def Upcase(input_string):
+//    output_string = input_string.split("<upcase>")
+//    for index,word in enumerate(output_string, start= 0) :
+//        closing_tag_index=word.find("</upcase>")
+//        if closing_tag_index>-1:
+//            try:
+//                output_string[index]=word[:closing_tag_index].upper() + word[closing_tag_index + 9:]
+//            except IndexError:
+//                output_string[index]=word[:closing_tag_index].upper()
+//    return str.join(" ",output_string).replace("</upcase>",'')
+        public static string UpCase(string input_string)
             //Question 6 
         {
-            StringBuilder output_string = new StringBuilder(input_string);
-            bool has_upper = true;
-        
-            while(has_upper)
+            string[] output_string = input_string.Split("<upcase>");
+            int closing_tag_count = 0;
+            
+            for (int index=0;index<output_string.Length;index++)
             {
-                int start=input_string.IndexOf("<upcase>");
-                Console.WriteLine(start);
-                int end = input_string.IndexOf("</upcase>");
-                break;
+                int closing_tag_index = output_string[index].IndexOf("</upcase>");
+                if (closing_tag_index>-1)
+                {
+                    closing_tag_count++;
+                    try
+                    {
+                        int backstring_start = closing_tag_index + 9;
+                        string word = output_string[index];
+                        int size = word.Length - 1;
+                        Console.WriteLine("back string: {0}",word.Substring(backstring_start, output_string[index].Length - 1)); //correct this bug/
+                        output_string[index] = output_string[index].Substring(0, closing_tag_index).ToUpper() +
+                            output_string[index].Substring(11, output_string[index].Length - 1);
+                      
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        output_string[index] = output_string[index].Substring(0, closing_tag_index).ToUpper();
+                    }
+                }
             }
-            //output_string.Replace(input_string.Substring(0,12),"name is face");
+            
+            if (closing_tag_count != output_string.Length-1)
+            {
+                //number opening and closing tags do not match
+                return Convert.ToString(-1);
+            }
+            else
+                return String.Join(' ', output_string);
 
-            return output_string.ToString();
+        }
 
+
+        public static bool IsPalindrome(string input_string)
+        {
+            string reverse_string = "";
+            for (int index=0;index< input_string.Length; index++)
+            {
+                reverse_string = reverse_string + input_string[input_string.Length - 1-index];
+            }
+            Console.WriteLine("string : {0} , reversed_string: {1}, last index: {2}", input_string, reverse_string, input_string.Length - 1);
+            if (reverse_string.ToLower() == input_string.ToLower())
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public static string GetPalindromes(string input_string)
+            //Question 21
+        {
+            string palindrome = "";
+            foreach(string value in input_string.Split())
+            {
+                if (IsPalindrome(value))
+                { palindrome=palindrome + value + " "; }
+            }
+            return palindrome;
         }
 
     }

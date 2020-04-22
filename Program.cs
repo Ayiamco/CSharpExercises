@@ -40,10 +40,13 @@ namespace Practice
             //Chapter12.GetSqrt("boy");
             //Console.WriteLine(Convert.ToString(null));
             //Chapter12.ReadNumber(1, 100);
-            
 
-            
-            Console.WriteLine(Chapter13.UpperCase("bi <upcase>is a boy, obi</upcase>  obi secondary schhol"));
+
+            // Console.WriteLine(" obi</upcase>".Substring( 2,4));
+
+            //Console.WriteLine(Chapter13.UpCase("bi <upcase>is a boy, obi</upcase> <upcase> obi</upcase> secondary schhol"));
+
+            Console.WriteLine("palindromes: {0}", Chapter13.GetPalindromes("mum used to be the madam of Abba"));
 
         }
 
