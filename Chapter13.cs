@@ -114,7 +114,7 @@ namespace Practice
         }
 
 
-        public static bool IsPalindrome(string input_string)
+        public bool IsPalindrome(string input_string)
         {
             string reverse_string = "";
             for (int index=0;index< input_string.Length; index++)
@@ -130,13 +130,13 @@ namespace Practice
                 return false;
         }
 
-        public static string GetPalindromes(string input_string)
+        public string GetPalindromes(string input_string)
             //Question 21
         {
             string palindrome = "";
             foreach(string value in input_string.Split())
             {
-                if (IsPalindrome(value))
+                if (this.IsPalindrome(value))
                 { palindrome=palindrome + value + " "; }
             }
             return palindrome;

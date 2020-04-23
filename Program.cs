@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace Practice
 {
     class Program
@@ -46,7 +47,9 @@ namespace Practice
 
             //Console.WriteLine(Chapter13.UpCase("bi <upcase>is a boy, obi</upcase> <upcase> obi</upcase> secondary schhol"));
 
-            Console.WriteLine("palindromes: {0}", Chapter13.GetPalindromes("mum used to be the madam of Abba"));
+            //Console.WriteLine("palindromes: {0}", Chapter13.GetPalindromes("mum used to be the madam of Abba"));
+            Chapter14.Book my_book = new Chapter14.Book("bible",book_release_date:"20/11/2000");
+            Console.WriteLine(my_book.title);
 
         }
 
