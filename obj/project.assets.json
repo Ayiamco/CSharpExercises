@@ -8,17 +8,21 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\HP Spectre XT Pro\\.nuget\\packages\\": {}
+    "C:\\Users\\HP Spectre XT Pro\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HP Spectre XT Pro\\source\\repos\\Practice\\Practice\\Practice.csproj",
+      "projectUniqueName": "C:\\Users\\HP Spectre XT Pro\\Desktop\\projects\\c#\\CSharpExercises\\Practice.csproj",
       "projectName": "Practice",
-      "projectPath": "C:\\Users\\HP Spectre XT Pro\\source\\repos\\Practice\\Practice\\Practice.csproj",
+      "projectPath": "C:\\Users\\HP Spectre XT Pro\\Desktop\\projects\\c#\\CSharpExercises\\Practice.csproj",
       "packagesPath": "C:\\Users\\HP Spectre XT Pro\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HP Spectre XT Pro\\source\\repos\\Practice\\Practice\\obj\\",
+      "outputPath": "C:\\Users\\HP Spectre XT Pro\\Desktop\\projects\\c#\\CSharpExercises\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
         "C:\\Users\\HP Spectre XT Pro\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -58,7 +62,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

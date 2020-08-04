@@ -7,6 +7,7 @@ namespace Practice
 {
     class Program
     {
+        delegate int MyDelegate(string gg);
         static void Main(string[] args)
         {
             //------------------------Chapter9.SelectTask Test---------------------------------------------------
@@ -48,44 +49,35 @@ namespace Practice
             //Console.WriteLine(Chapter13.UpCase("bi <upcase>is a boy, obi</upcase> <upcase> obi</upcase> secondary schhol"));
 
             //Console.WriteLine("palindromes: {0}", Chapter13.GetPalindromes("mum used to be the madam of Abba"));
-            Chapter14.Book my_book = new Chapter14.Book("bible",book_release_date:"20/11/2000");
-            Console.WriteLine(my_book.title);
+            //Chapter14.Book my_book = new Chapter14.Book("bible",book_release_date:"20/11/2000");
+            //Console.WriteLine(my_book.title);
+
+            //Chapter18.GetCount(1, 1, 2, 3, 4, 4, 5, 5, 6, 6, 7, 8);
+            // Chapter18.RemoveOddFrequency(4, 2, 2, 5, 2, 3, 2, 3, 1, 5, 2, 6, 6, 6);
+            //Chapter18.GetWordCount("word.txt");
+
+            Console.Write("how olde are you?: ");
+            int age= int.Parse(Console.ReadLine());
+            switch (age)
+            {
+                case int aa when (age > 0 && age <=25):
+                    Console.WriteLine("congrats youth!!!");
+                    break;
+                default:
+                    Console.WriteLine("you don old!!!!");
+                    break;
+            }
+            MyDelegate new1 = new MyDelegate(CalcAge);
+            Console.WriteLine(new1("04/04/1995"));
 
         }
 
-        static void FindPath(int row, int col, char[,] lab)
+        static int CalcAge(string dob)
         {
-            if (row < 0 || col < 0 || row >= lab.GetLength(0) || col >= lab.GetLength(1))
-            {
-                //we are out of the Labrynth
-                return;
-            }
-
-            // Check if we have found the exit
-            if (lab[row, col] == 'e')
-            {
-                Console.WriteLine("Found the exit!");
-            }
-
-            if (lab[row, col] != ' ')
-            {
-                //we have met a road block
-                //current cell is not free
-                return;
-
-            }
-            // mark current cell as visited
-            lab[row, col] = 's';
-
-            //looking for the next free cell
-            FindPath(row, col - 1, lab);//left
-            FindPath(row, col + 1, lab);//right
-            FindPath(row + 1, col, lab);//top
-            FindPath(row - 1, col, lab);//bottom
-
-            //mark back the cell as free
-            lab[row, col] = ' ';
+            return DateTime.Now.Year- Convert.ToDateTime(dob).Year;
         }
+
+        
        
     }
 }
