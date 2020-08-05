@@ -7,7 +7,7 @@ namespace Practice
 {
     class Program
     {
-        delegate int MyDelegate(string gg);
+        
         static void Main(string[] args)
         {
             //------------------------Chapter9.SelectTask Test---------------------------------------------------
@@ -56,27 +56,10 @@ namespace Practice
             // Chapter18.RemoveOddFrequency(4, 2, 2, 5, 2, 3, 2, 3, 1, 5, 2, 6, 6, 6);
             //Chapter18.GetWordCount("word.txt");
 
-            Console.Write("how olde are you?: ");
-            int age= int.Parse(Console.ReadLine());
-            switch (age)
-            {
-                case int aa when (age > 0 && age <=25):
-                    Console.WriteLine("congrats youth!!!");
-                    break;
-                default:
-                    Console.WriteLine("you don old!!!!");
-                    break;
-            }
-            MyDelegate new1 = new MyDelegate(CalcAge);
-            Console.WriteLine(new1("04/04/1995"));
 
         }
 
-        static int CalcAge(string dob)
-        {
-            return DateTime.Now.Year- Convert.ToDateTime(dob).Year;
-        }
-
+ 
         
        
     }
